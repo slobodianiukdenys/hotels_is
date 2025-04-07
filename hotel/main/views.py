@@ -6,3 +6,12 @@ def index(request):
 
 def menu(request):
     return render(request, 'menu.html')
+
+def addClient(request):
+    return render(request, 'addClient.html')
+
+def clients(request):
+    return render(request, 'clients.html')
+
+def rooms(request):
+    return render(request, 'rooms.html')
