@@ -1,17 +1,31 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from .models import Client
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
 
+@login_required
 def menu(request):
     return render(request, 'menu.html')
 
+@login_required
 def addClient(request):
     return render(request, 'addClient.html')
 
+@login_required
 def clients(request):
-    return render(request, 'clients.html')
+    clients = Client.objects.all()
+    return render(request, 'clients.html', {'clients': clients})
 
+@login_required
 def rooms(request):
     return render(request, 'rooms.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('menu')
+
