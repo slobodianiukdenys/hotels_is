@@ -69,7 +69,7 @@ h1 {
 
     position: absolute;
     margin-top: 10px;
-    left: 84%;
+    left: 80%;
     
 }
 
@@ -98,6 +98,30 @@ h1 {
 
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 50%;
+    top: 53%;
     left: 50%;
+}
+
+.block2{
+    width: 500px;
+    height: 450px;
+    backdrop-filter: blur(30px);
+    border: 1px solid black;  
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 56%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.addclienth2 {
+    text-align: center;
+    margin-top: 30px;
 }

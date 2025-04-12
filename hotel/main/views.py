@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.shortcuts import redirect
 from .models import Client
+from .forms import ClientForm
 
 # Create your views here.
 def index(request):
@@ -14,7 +14,23 @@ def menu(request):
 
 @login_required
 def addClient(request):
-    return render(request, 'addClient.html')
+    error = ''
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('menu')
+        else:
+            error = 'Форма неправильна'
+
+    form = ClientForm()
+
+    data = {
+        'form': form,
+        'error': error
+    }
+
+    return render(request, 'addClient.html', data)
 
 @login_required
 def clients(request):
