@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %} Клієнти {% endblock %}
+
+{% block content %}
+
+<div class="block1">
+    <ul class="list-group">
+    {% for el in clients %}
+         <li class="list-group-item">{{ el.surname }} {{ el.name }} {{ el.second_name }} {{ el.phone_number }} {{ el.room_id}}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

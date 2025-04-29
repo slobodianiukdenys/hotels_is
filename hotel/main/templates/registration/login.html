@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block title %} Увійти {% endblock %}
+
+{% block content %}
+
+<h1>Увійти</h1>
+<form method="post">
+    {% csrf_token %}
+<div class="login1">
+    <label for="exampleFormControlInput1" class="form-label logforma">Логін</label>    
+    <input type="login" name="username" class="form-control logforma" id="exampleFormControlInput1" placeholder="Логін">
+    <label for="inputPassword5" class="form-label logforma">Пароль</label>
+    <input type="password" name="password" id="inputPassword5 logforma" class="form-control" placeholder="*******" aria-describedby="passwordHelpBlock">
+    <button type="submit" class="btn btn-dark logbutton">Увійти в систему</button>
+    {{ form.errors }}
+
+</div>
+    </form>
+
+{% endblock %}

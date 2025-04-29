@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} Інформаційна система {% endblock %}
+
+{% block content %}
+    <div class="accInfo">
+        <h5 class="accInfoP">Активна сесія:</h5>
+        <h3 class="accInfoP">{{ user.first_name }}</h3>
+        <h6 class="accInfoP">{{ user.last_name }}</h6>
+        <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+            <button type="submit" class="btn btn-dark accInfoButt">Вийти</button>
+        </form>
+    </div>
+
+    <div>
+        <a href="{% url 'addclient' %}" type="button" class="btn btn-primary menuButtons">Додати нового клієнта</a>
+        <a href="{% url 'clients' %}" type="button" class="btn btn-primary menuButtons">Переглянути базу клієнтів</a>
+        <a href="{% url 'rooms' %}" type="button" class="btn btn-primary menuButtons">Переглянути номери</a>
+        <a href="{% url 'menu' %}" type="button" class="btn btn-success menuButtons">Зайняті номери</a>
+    </div>
+{% endblock %}
