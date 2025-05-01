@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block title %} Зайняті номери {% endblock %}
+
+{% block content %}
+
+<div class="block1">
+    <h2>Зайняті номери</h2>
+    <ul class="list-group">
+    {% for booking in unavailable_bookings %}
+        <li class="list-group-item">
+            Номер: {{ booking.room.room_id }}<br>
+            Клас номеру: {{ booking.room.room_class }}<br>
+            Місткість: {{ booking.room.capacity }} осіб<br>
+            Ціна за ніч: {{ booking.room.cost }}<br>
+            Статус: Зайнята<br>
+            Заброньовано клієнтом: {{ booking.client.surname }} {{ booking.client.name }}<br>
+            Дата заселення: {{ booking.check_in_date }}<br>
+            Дата виселення: {{ booking.check_out_date }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">На даний момент немає заброньованих кімнат.</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

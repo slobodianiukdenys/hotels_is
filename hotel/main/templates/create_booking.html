@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+{% block title %} Забронювати кімнату {% endblock %}
+
+{% block content %}
+
+<h2 class="addclienth2">Забронювати кімнату</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="block2">
+        <div class="mb-3">
+            <label for="{{ form.client.id_for_label }}" class="form-label logforma">{{ form.client.label }}</label>
+            {{ form.client }}
+            {{ form.client.errors }}
+            <small class="form-text text-muted">Виберіть клієнта зі списку.</small>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.check_in_date.id_for_label }}" class="form-label logforma">{{ form.check_in_date.label }}</label>
+            {{ form.check_in_date }}
+            {{ form.check_in_date.errors }}
+            <small class="form-text text-muted">Введіть дату заселення.</small>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.check_out_date.id_for_label }}" class="form-label logforma">{{ form.check_out_date.label }}</label>
+            {{ form.check_out_date }}
+            {{ form.check_out_date.errors }}
+            <small class="form-text text-muted">Введіть дату виселення.</small>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.room.id_for_label }}" class="form-label logforma">{{ form.room.label }}</label>
+            <select id="{{ form.room.id_for_label }}" name="{{ form.room.name }}" class="form-control">
+                <option value="">---------</option>
+                {% for id, room_id in available_rooms_choices %}
+                    <option value="{{ id }}">{{ room_id }}</option>
+                {% endfor %}
+            </select>
+            {{ form.room.errors }}
+            <small class="form-text text-muted">Виберіть номер кімнати для бронювання.</small>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.additional_services.id_for_label }}" class="form-label logforma">{{ form.additional_services.label }}</label>
+            {{ form.additional_services }}
+            {{ form.additional_services.errors }}
+            <small class="form-text text-muted">Виберіть додаткові послуги (за потреби).</small>
+        </div>
+        <button type="submit" class="btn btn-dark logbutton">Забронювати</button>
+    </div>
+</form>
+
+<script>
+    const checkInDateInput = document.getElementById("{{ form.check_in_date.id_for_label }}");
+    const checkOutDateInput = document.getElementById("{{ form.check_out_date.id_for_label }}");
+    const roomSelect = document.getElementById("{{ form.room.id_for_label }}");
+
+    function updateAvailableRooms() {
+        const checkInDate = checkInDateInput.value;
+        const checkOutDate = checkOutDateInput.value;
+
+        if (checkInDate && checkOutDate) {
+            fetch(`/get-available-rooms/?check_in_date=${checkInDate}&check_out_date=${checkOutDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                    } else {
+                        roomSelect.innerHTML = '<option value="">---------</option>'; 
+                        data.rooms.forEach(room => {
+                            const option = document.createElement('option');
+                            option.value = room.id;
+                            option.textContent = room.room_id;
+                            roomSelect.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Помилка при отриманні доступних кімнат:", error);
+                });
+        } else {
+            roomSelect.innerHTML = '<option value="">---------</option>'; 
+        }
+    }
+
+    checkInDateInput.addEventListener('change', updateAvailableRooms);
+    checkOutDateInput.addEventListener('change', updateAvailableRooms);
+
+    window.onload = updateAvailableRooms;
+</script>
+
+{% endblock %}

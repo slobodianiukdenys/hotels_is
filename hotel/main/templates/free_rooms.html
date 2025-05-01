@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} Вільні кімнати {% endblock %}
+
+{% block content %}
+
+<div class="block1">
+    <h2>Вільні кімнати</h2>
+    <ul class="list-group">
+    {% for room in free_rooms %}
+        <li class="list-group-item">
+            Номер кімнати: {{ room.room_id }}<br>
+            Клас кімнати: {{ room.room_class }}<br>
+            Місткість: {{ room.capacity }} осіб<br>
+            Ціна за ніч: {{ room.cost }}
+        </li>
+    {% empty %}
+        <li class="list-group-item">На даний момент вільних кімнат немає.</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

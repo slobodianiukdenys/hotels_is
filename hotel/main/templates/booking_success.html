@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block title %} Бронювання успішне {% endblock %}
+
+{% block content %}
+
+<div class="block1">
+    <h2>Бронювання успішно створено!</h2>
+    <p>Ось деталі вашого бронювання:</p>
+    <ul>
+        <li><strong>Номер бронювання:</strong> {{ booking.id }}</li>
+        <li><strong>Клієнт:</strong> {{ booking.client.surname }} {{ booking.client.name }}</li>
+        <li><strong>Номер кімнати:</strong> {{ booking.room.room_id }}</li>
+        <li><strong>Дата заселення:</strong> {{ booking.check_in_date }}</li>
+        <li><strong>Дата виселення:</strong> {{ booking.check_out_date }}</li>
+        {% if booking.additional_services.all %}
+            <li><strong>Додаткові послуги:</strong>
+                <ul>
+                    {% for service in booking.additional_services.all %}
+                        <li>{{ service.name }} ({{ service.price }} грн.)</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endif %}
+        <li><strong>Загальна ціна:</strong> {{ booking.total_price }} грн.</li>
+        <li><strong>Дата бронювання:</strong> {{ booking.booking_date }}</li>
+    </ul>
+    <p><a href="{% url 'menu' %}" class="btn btn-primary">Повернутися до головного меню</a></p>
+</div>
+
+{% endblock %}
