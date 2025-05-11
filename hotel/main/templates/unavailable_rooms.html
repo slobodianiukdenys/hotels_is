@@ -3,7 +3,6 @@
 {% block title %} Зайняті номери {% endblock %}
 
 {% block content %}
-
 <div class="block1">
     <h2>Зайняті номери</h2>
     <ul class="list-group">
@@ -17,6 +16,11 @@
             Заброньовано клієнтом: {{ booking.client.surname }} {{ booking.client.name }}<br>
             Дата заселення: {{ booking.check_in_date }}<br>
             Дата виселення: {{ booking.check_out_date }}
+
+            <form method="post" action="{% url 'early_checkout' booking.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-warning mt-2">Виселити</button>
+            </form>
         </li>
     {% empty %}
         <li class="list-group-item">На даний момент немає заброньованих кімнат.</li>

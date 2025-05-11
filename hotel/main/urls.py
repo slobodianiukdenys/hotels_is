@@ -13,4 +13,5 @@ urlpatterns = [
     path('bookings/success/', views.booking_success, name='booking_success'),
     path('get-available-rooms/', views.get_available_rooms, name='get_available_rooms'),
     path('mark-past-bookings-available/', views.mark_past_bookings_as_available, name='mark_past_bookings_available'),
+    path('early-checkout/<int:booking_id>/', views.early_checkout, name='early_checkout'),
 ]

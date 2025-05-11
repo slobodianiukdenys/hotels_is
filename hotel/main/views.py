@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.utils import timezone
@@ -7,6 +7,7 @@ from django.views.decorators.http import require_GET
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Client, Room, Booking, Service
 from .forms import ClientForm, BookingForm
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -152,3 +153,20 @@ def mark_past_bookings_as_available(request):
         return redirect('menu') 
     else:
         return redirect('menu')
+
+
+@login_required
+def early_checkout(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    room = booking.room
+
+    if request.method == 'POST':
+        room.status = 'available'
+        room.client = None
+        room.save()
+        booking.delete()
+
+        messages.success(request, f"Кімнату '{room.room_id}' успішно виселено.")
+        return redirect('unavailable_rooms') 
+
+    return redirect('unavailable_rooms')

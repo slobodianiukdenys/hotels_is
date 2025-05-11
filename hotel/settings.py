@@ -126,4 +126,23 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'main.views': {  views.py 
+            'handlers': ['console'],
+            'level': 'INFO',  # Або 'DEBUG' для більш детального виводу
+            'propagate': False,
+        },
+    },
+}
